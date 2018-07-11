@@ -2,14 +2,17 @@ const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
+const wwwhisper = require('connect-wwwhisper');
 
 const {generateMessage, generateLocationMessage} = require('./utils/message');
+const {isRealString} = require('./utils/validation');
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
 var app = express();
 var server = http.createServer(app);
 var io = socketIO(server);
 
+app.use(wwwhisper());
 app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
@@ -18,6 +21,21 @@ io.on('connection', (socket) => {
     socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
 
     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
+
+    socket.on('join', (params, callback) => {
+        if (!isRealString(params.name) || !isRealString(params.room)) {
+            callback('Name and room name are required.');
+        }
+        
+        socket.join(params.room);
+        // socket.leave(params.room);
+
+        // io.emit -> io.to()
+        // socket.broadcast.emit
+        // socket.emit
+
+        callback();
+    });
 
     socket.on('createMessage', (message, callback) => {
         console.log('createMessage', message);
