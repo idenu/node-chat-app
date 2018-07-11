@@ -8,12 +8,12 @@ describe('isRealString', () => {
         expect(res).toBe(false);
     });
 
-it('should reject string with only spaces', () => {
+    it('should reject string with only spaces', () => {
         var res = isRealString('    ');
         expect(res).toBe(false);
     });
 
-it('should allow string with non-space characters', () => {
+    it('should allow string with non-space characters', () => {
         var res = isRealString('D');
         expect(res).toBe(true);
     });
