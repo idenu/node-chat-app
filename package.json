@@ -14,12 +14,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "connect-ensure-login": "^0.1.1",
     "express": "^4.16.3",
     "install": "^0.12.1",
     "moment": "^2.22.2",
+    "passport": "^0.4.0",
+    "passport-auth0": "^1.0.0",
     "socket.io": "^2.1.1"
   },
   "devDependencies": {
+    "dotenv": "^6.0.0",
     "eslint": "^5.1.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.13.0",
