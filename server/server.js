@@ -4,7 +4,6 @@ const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
-const wwwhisper = require('connect-wwwhisper');
 
 const {generateMessage, generateLocationMessage} = require('./utils/message');
 const {isRealString} = require('./utils/validation');
@@ -18,7 +17,7 @@ var env = process.env.NODE_ENV || 'development';
 console.log(env);
 
 if (env === 'production') {
-    app.use(wwwhisper());
+    // 
 }
 
 app.use(express.static(publicPath));
