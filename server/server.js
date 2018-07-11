@@ -1,3 +1,5 @@
+require('./config/config');
+
 const path = require('path');
 const http = require('http');
 const express = require('express');
@@ -7,12 +9,18 @@ const wwwhisper = require('connect-wwwhisper');
 const {generateMessage, generateLocationMessage} = require('./utils/message');
 const {isRealString} = require('./utils/validation');
 const publicPath = path.join(__dirname, '../public');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 var app = express();
 var server = http.createServer(app);
 var io = socketIO(server);
 
-app.use(wwwhisper());
+var env = process.env.NODE_ENV || 'development';
+console.log(env);
+
+if (env === 'production') {
+    app.use(wwwhisper());
+}
+
 app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
